@@ -87,6 +87,57 @@ async def debug_geoapify(
     except Exception as e:
         return {"error": str(e), "type": type(e).__name__}
 
+# ─── DEBUG: Test /geo/auto logic step by step ───
+@app.get("/geo/debug/auto")
+async def debug_auto(
+    lat: float = Query(30.35886, ge=-90, le=90),
+    lng: float = Query(73.3815, ge=-180, le=180),
+    radius: int = Query(300, ge=50, le=5000)
+):
+    """Test /geo/auto logic step by step"""
+    results = {}
+    
+    # 1. Check local
+    engine = get_engine()
+    local_results = await engine.search(SearchRequest(lat=lat, lng=lng, radius_m=radius))
+    results["local_results"] = len(local_results)
+    results["local_empty"] = not local_results
+    
+    # 2. Check key
+    results["key_loaded"] = bool(GEOAPIFY_API_KEY)
+    
+    # 3. Try Geoapify
+    if GEOAPIFY_API_KEY:
+        try:
+            async with httpx.AsyncClient(timeout=15.0) as client:
+                resp = await client.get(
+                    "https://api.geoapify.com/v2/places",
+                    params={
+                        "categories": "commercial,catering,service,fuel,entertainment,healthcare,education",
+                        "filter": f"circle:{lng},{lat},{radius}",
+                        "limit": 50,
+                        "apiKey": GEOAPIFY_API_KEY
+                    }
+                )
+            results["geoapify_status"] = resp.status_code
+            if resp.status_code == 200:
+                data = resp.json()
+                features = data.get("features", [])
+                results["geoapify_features"] = len(features)
+                if features:
+                    first = features[0].get("properties", {})
+                    results["first_feature"] = {
+                        "name": first.get("name"),
+                        "categories": first.get("categories"),
+                        "distance": first.get("distance")
+                    }
+            else:
+                results["geoapify_error"] = resp.text[:200]
+        except Exception as e:
+            results["geoapify_exception"] = str(e)
+    
+    return results
+
 # ─── NEW: Automated Places via Geoapify (Free 3000/day) ───
 @app.get("/geo/auto")
 async def auto_places(
