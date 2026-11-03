@@ -1,0 +1,41 @@
+# Rust build artifacts
+target/
+Cargo.lock
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Installers
+rustup-init.exe
+vs_BuildTools.exe
+msys2.exe
+mingw.7z
+
+# Logs
+*.log
+
+# Local config
+.env
+.env.local
