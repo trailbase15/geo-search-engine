@@ -48,6 +48,17 @@ async def stats():
 async def health():
     return {"status": "ok", "service": "geo-search-engine"}
 
+# ─── DEBUG: Check if API key is loaded ───
+@app.get("/geo/debug")
+async def debug():
+    key = GEOAPIFY_API_KEY
+    return {
+        "key_loaded": bool(key),
+        "key_prefix": key[:8] + "..." if key else "NOT SET",
+        "key_length": len(key) if key else 0,
+        "env_vars": {k: v[:8] + "..." for k, v in os.environ.items() if "GEO" in k.upper() or "MAP" in k.upper() or "API" in k.upper()}
+    }
+
 # ─── NEW: Automated Places via Geoapify (Free 3000/day) ───
 @app.get("/geo/auto")
 async def auto_places(
