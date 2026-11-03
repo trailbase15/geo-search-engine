@@ -1,7 +1,11 @@
 from fastapi import FastAPI
 from geo_search.engine import get_engine, shutdown_engine, SearchRequest, CookieSpec
 
-app = FastAPI(title="My App with Geo Search")
+app = FastAPI(
+    title="Geo Search Engine",
+    description="Ultra-fast geospatial search with auto-cookie handling",
+    version="0.1.0"
+)
 
 @app.on_event("startup")
 async def startup():
@@ -28,3 +32,12 @@ async def set_cookie(spec: CookieSpec):
 async def get_cookies(domain: str):
     engine = get_engine()
     return {"domain": domain, "cookie_header": engine.get_cookie_header(domain)}
+
+@app.get("/geo/stats")
+async def stats():
+    engine = get_engine()
+    return engine.stats()
+
+@app.get("/health")
+async def health():
+    return {"status": "ok", "service": "geo-search-engine"}

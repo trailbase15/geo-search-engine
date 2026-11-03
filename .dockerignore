@@ -1,0 +1,15 @@
+target/
+Cargo.lock
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+.env
+*.exe
+*.dll
+rustup-init.exe
+vs_BuildTools.exe
+msys2.exe
+mingw.7z
+.git/
