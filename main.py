@@ -59,6 +59,34 @@ async def debug():
         "env_vars": {k: v[:8] + "..." for k, v in os.environ.items() if "GEO" in k.upper() or "MAP" in k.upper() or "API" in k.upper()}
     }
 
+# ─── DEBUG: Test Geoapify API directly ───
+@app.get("/geo/debug/geoapify")
+async def debug_geoapify(
+    lat: float = Query(30.35886, ge=-90, le=90),
+    lng: float = Query(73.3815, ge=-180, le=180),
+    radius: int = Query(300, ge=50, le=5000)
+):
+    if not GEOAPIFY_API_KEY:
+        return {"error": "No API key loaded"}
+    
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            resp = await client.get(
+                "https://api.geoapify.com/v2/places",
+                params={
+                    "categories": "commercial,shop,office,catering,service,petrol",
+                    "filter": f"circle:{lng},{lat},{radius}",
+                    "limit": 20,
+                    "apiKey": GEOAPIFY_API_KEY
+                }
+            )
+        return {
+            "status_code": resp.status_code,
+            "data": resp.json() if resp.status_code == 200 else resp.text
+        }
+    except Exception as e:
+        return {"error": str(e), "type": type(e).__name__}
+
 # ─── NEW: Automated Places via Geoapify (Free 3000/day) ───
 @app.get("/geo/auto")
 async def auto_places(
