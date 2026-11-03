@@ -74,7 +74,7 @@ async def debug_geoapify(
             resp = await client.get(
                 "https://api.geoapify.com/v2/places",
                 params={
-                    "categories": "commercial,shop,office,catering,service,petrol",
+                    "categories": "commercial,catering,service,fuel,entertainment,healthcare,education",
                     "filter": f"circle:{lng},{lat},{radius}",
                     "limit": 20,
                     "apiKey": GEOAPIFY_API_KEY
@@ -114,7 +114,7 @@ async def auto_places(
                 resp = await client.get(
                     "https://api.geoapify.com/v2/places",
                     params={
-                        "categories": "commercial,shop,office,catering,service,petrol",
+                        "categories": "commercial,catering,service,fuel,entertainment,healthcare,education",
                         "filter": f"circle:{lng},{lat},{radius}",
                         "limit": 50,
                         "apiKey": GEOAPIFY_API_KEY
@@ -190,7 +190,7 @@ async def camera_context(
                     resp = await client.get(
                         "https://api.geoapify.com/v2/places",
                         params={
-                            "categories": "commercial,shop,office,catering,service,petrol",
+                            "categories": "commercial,catering,service,fuel,entertainment,healthcare,education",
                             "filter": f"circle:{lng},{lat},{radius_m}",
                             "limit": 20,
                             "apiKey": GEOAPIFY_API_KEY
