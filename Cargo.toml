@@ -1,0 +1,29 @@
+[package]
+name = "geo-search-core"
+version = "0.1.0"
+edition = "2021"
+description = "Nanosecond geospatial search + cookie jar"
+
+[lib]
+name = "geo_search_core"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+python = ["pyo3", "pyo3/abi3"]
+default = ["python"]
+
+[dependencies]
+h3o = "0.7"
+rstar = "0.12"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+once_cell = "1.18"
+pyo3 = { version = "0.21", features = ["abi3", "extension-module"], optional = true }
+thiserror = "1.0"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
+strip = true
+panic = "abort"

@@ -1,0 +1,20 @@
+# config.toml — Copy to /etc/geo-search/ or keep in project root
+[engine]
+h3_resolution = 9        # 7=1.2km, 8=370m, 9=74m, 10=15m
+max_results = 50
+cookie_ttl_secs = 86400  # 24 hours
+
+[server]
+bind = "127.0.0.1"
+port = 8080
+workers = 4
+
+[data]
+# Auto-load on startup (optional)
+geojson_path = "./data/places.geojson"
+id_field = "id"
+
+[external_apis]
+# Domains to auto-attach cookies for
+google_maps = "maps.googleapis.com"
+places_api = "places.googleapis.com"

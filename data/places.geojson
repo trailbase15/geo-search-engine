@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "1",
+        "name": "Liberty Market",
+        "category": "food",
+        "rating": 4.5
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [74.3587, 31.5204]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "2",
+        "name": "Mall of Lahore",
+        "category": "shopping",
+        "rating": 4.2
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [74.3500, 31.5500]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "3",
+        "name": "Shalimar Gardens",
+        "category": "park",
+        "rating": 4.7
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [74.3200, 31.5800]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "4",
+        "name": "Badshahi Mosque",
+        "category": "landmark",
+        "rating": 4.8
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [74.3100, 31.5880]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "5",
+        "name": "Lahore Fort",
+        "category": "landmark",
+        "rating": 4.6
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [74.3150, 31.5890]
+      }
+    }
+  ]
+}
